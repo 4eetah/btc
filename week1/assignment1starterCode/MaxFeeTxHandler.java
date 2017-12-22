@@ -110,34 +110,5 @@ public class TxHandler {
 
 
     public static void main(String[] args) {
-        int n = 3;
-        Transaction[] tx = new Transaction[n];
-        for (int i = 0; i < n; i++)
-            tx[i] = new Transaction();
-
-        MessageDigest md;
-        try {
-            md = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException x) {
-            System.out.println(x.getMessage());
-            return;
-        }
-
-        byte[][] prevHashes = new byte[3][];
-        String[] prevDummy = new String[n];
-        for (int i=0; i<n; i++) {
-            prevDummy[i] = new String("Hello"+i);
-        }
-        for(int i = 0; i < n; i++) {
-            byte b[] = prevDummy[i].getBytes();
-            md.update(b);
-            prevHashes[i]=md.digest();
-        }
-        tx[0].addInput(prevHashes[0], 0);
-        tx[1].addInput(prevHashes[0], 0);
-        tx[1].addInput(prevHashes[1], 1);
-        tx[2].addInput(prevHashes[0], 0);
-        tx[2].addInput(prevHashes[1], 1);
-        tx[2].addInput(prevHashes[2], 2);
     }
 }
